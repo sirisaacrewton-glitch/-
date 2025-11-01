@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>グッドスタインの定理</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- KaTeX (LaTeX renderer) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMcAgsUFkSSNEOO3rdstJlxTCP5FkIBWVYddK+dR01qGsfXKz" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzYCNS2atRnLFQrZpNjwIHsAFRSNMuAnJ8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURPlLJSzFGFgpuTHe2goRFOEGyLUPKBCyvGef1ZwCPIsJOOFy0qKio" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+
+    <style>
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: #f8f9fa; 
+            color: #212529; /* 基本の文字色 */
+            line-height: 1.75; /* 行間 */
+            font-weight: 400; /* 地の文の太さ */
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem; /* containerのpaddingを縮小 */
+        }
+        .slide {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem; /* スライド内のpaddingを縮小 */
+        }
+        .slide-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 1rem 0;
+        }
+        .slide-header h1 {
+            font-size: 3.5rem; /* 40px -> 36px */
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        .slide-header p {
+            font-size: 1.15rem; /* 20px -> 18px */
+            color: #495057;
+            font-weight: 500;
+        }
+        .slide h2 {
+            font-size: 1.7rem; /* 36px -> 30px */
+            font-weight: 700; /* 900 -> 700 */
+            border-bottom: 3px solid #4338ca; /* 4px -> 3px */
+            padding-bottom: 0.5rem; /* 0.75rem -> 0.5rem */
+            margin-bottom: 1.5rem; /* 2rem -> 1.5rem */
+            color: #111827;
+        }
+        .slide h3 {
+            font-size: 1.3rem; /* 28px -> 22px */
+            font-weight: 700;
+            margin-top: 2rem; /* 2.5rem -> 2rem */
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        .slide h4 {
+            font-size: 1.05rem; /* 18px -> 17px */
+            font-weight: 700; /* 500 -> 700 */
+            margin-top: 1rem; /* 1.5rem -> 1rem */
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        .slide p, .slide li, .slide ol {
+            font-size: 1rem; /* 18px -> 16px */
+            margin-bottom: 1rem; /* 1.25rem -> 1rem */
+            text-align: left;
+        }
+        .slide ul, .slide ol {
+            padding-left: 1.5rem; /* 1.75rem -> 1.5rem */
+        }
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 0.5rem;
+            padding: 1rem 1.25rem; /* パディングを縮小 */
+            margin-top: 1rem; /* 1.5rem -> 1rem */
+            margin-bottom: 1rem; /* 1.5rem -> 1rem */
+        }
+        .rule-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4338ca; /* 5px -> 4px */
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .theorem-box {
+            background-color: #f1f3ff;
+            border: 1px solid #c7d2fe;
+            padding: 1.25rem; /* 1.5rem -> 1.25rem */
+        }
+        details {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            margin-top: 1rem; /* 1.5rem -> 1rem */
+            border: 1px solid #e9ecef;
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.05rem; /* 18px -> 17px */
+            border-radius: 0.5rem;
+            color: #3730a3;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 0.8rem; /* 0.75rem 1rem -> 0.6rem 0.8rem */
+        }
+        details summary:hover {
+            background-color: #e0e7ff;
+        }
+        details summary::before {
+            content: '▶';
+            margin-right: 0.5rem; /* 0.75rem -> 0.5rem */
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+        .details-content {
+            padding: 0 1rem 1rem 1rem; /* detailsのコンテンツのパディング */
+        }
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+            font-size: 1.1em;
+            text-align: center; /* 数式を中央揃え */
+        }
+        .slide footer {
+            text-align: center;
+            margin-top: 2.5rem; /* 3rem -> 2.5rem */
+            padding-top: 1.25rem; /* 1.5rem -> 1.25rem */
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="slide-header">
+            <h1 class="text-5xl md:text-6xl font-black text-gray-900">グッドスタインの定理</h1>
+            <p>〜爆発するかに見える数列の収束を順序数の概念を使って示そう〜</p>
+            <p class="text-lg text-gray-600 mt-8">発表者：片岡 竜士</p>
+        </div>
+
+        <!-- Chapter 1: The Game -->
+        <div class="slide">
+            <h2>Chapter 1： グッドスタインの数列〜爆発する数字ゲーム〜</h2>
+            
+            <p>まずは、自然数 $m$ から始まる「グッドスタイン数列 $G(m)$」というゲームのルールを説明します。この数列を $(m_0, m_1, m_2, \dots)$ と書くことにします。</p>
+            <p>$k=0$ から始めます。最初の数 $m_0 = m$ です。</p>
+
+            <p>$k \ge 0$ のとき、$m_k$ から次の $m_{k+1}$ を作るルールは、次の2つのステップからなります。</p>
+
+            <div class="content-box rule-box">
+                <h3 style="margin-top: 0.5rem;">ルール概要</h3>
+                <ol>
+                    <li>
+                        <strong style="font-weight: 700;">ステップ1： 遺伝的 $b_k$-進数表記</strong><br>
+                        $k$ 番目のステップでは、<strong>底 $b_k = k+2$</strong> を使います。（$k=0$ なら底 $2$, $k=1$ なら底 $3$, ...）<br>
+                        $m_k$ を「底 $b_k$ による遺伝的進数表記」で書き直します。このとき、単に $b_k$ 進数にするだけでなく、指数部分も再帰的に $b_k$ で書き直す「<strong>遺伝的記法</strong>」を使います。
+                    </li>
+                    <li>
+                        <strong style="font-weight: 700;">ステップ2： 置換＆マイナス1</strong><br>
+                        $m_k$ の「遺伝的 $b_k$ 進数表記」に含まれる <strong>全ての $b_k$ (= $k+2$) を $b_{k+1}$ (= $k+3$) に書き換え</strong>ます。<br>
+                        最後に、その数から <strong>$1$ を引きます</strong>。これが $m_{k+1}$ です。
+                    </li>
+                </ol>
+                <br>
+                ただし、$m_k=0$ となった場合それ以降はずっと0とします。
+            </div>
+
+            <h3>やってみよう！ ($m = 4$ の場合)</h3>
+            <p>数列 $(m_0, m_1, m_2, \dots)$ を計算してみましょう。</p>
+
+            <!-- k=0 -->
+            <div class="content-box">
+                <h4><strong>$k=0$： $m_0$ から $m_1$ を作る</strong></h4>
+                <p>$m_0 =m= 4$</p>
+                <p><strong>ステップ1 (底 $b_0 = 0+2 = 2$ で遺伝的表記):</strong></p>
+                $$ m_0 = 4 = 2^2 = 2^{2^1} $$
+                <p><strong>ステップ2 (置換 $2 \to 3$ ＆ $-1$):</strong></p>
+                $$ m_1 = (3^{3^1}) - 1 = 3^3 - 1 = 27 - 1 = \mathbf{26} $$
+            </div>
+
+            <!-- k=1 -->
+            <div class="content-box">
+                <h4><strong>$k=1$： $m_1$ から $m_2$ を作る</strong></h4>
+                <p>$m_1 = 26$</p>
+                <p><strong>ステップ1 (底 $b_1 = 1+2 = 3$ で遺伝的表記):</strong></p>
+                $$ m_1 = 26 = 2 \cdot 3^2 + 2 \cdot 3^1 + 2 \cdot 3^0 $$
+                <p><strong>ステップ2 (置換 $3 \to 4$ ＆ $-1$):</strong></p>
+                $$ m_2 = (2 \cdot 4^2 + 2 \cdot 4^1 + 2 \cdot 4^0) - 1 $$
+                $$ m_2 = (2 \cdot 16 + 2 \cdot 4 + 2) - 1 = (32 + 8 + 2) - 1 = 42 - 1 = \mathbf{41} $$
+            </div>
+
+            <!-- k=2 -->
+            <div class="content-box">
+                <h4><strong>$k=2$： $m_2$ から $m_3$ を作る</strong></h4>
+                <p>$m_2 = 41$</p>
+                <p><strong>ステップ1 (底 $b_2 = 2+2 = 4$ で遺伝的表記):</strong></p>
+                $$ m_2 = 41 = 2 \cdot 4^2 + 2 \cdot 4^1 + 1 \cdot 4^0 $$
+                <p><strong>ステップ2 (置換 $4 \to 5$ ＆ $-1$):</strong></p>
+                $$ m_3 = (2 \cdot 5^2 + 2 \cdot 5^1 + 1 \cdot 5^0) - 1 $$
+                $$ m_3 = (2 \cdot 25 + 10 + 1) - 1 = 61 - 1 = \mathbf{60} $$
+            </div>
+            
+            <p>数列は $(4, 26, 41, 60, \dots)$ となりました。この先も、数はどんどん増えていきそうです。</p>
+
+            <h3>数列の爆発的な挙動</h3>
+            <p>この数列の増加は、私たちの想像を絶するものです。</p>
+            <p>例えば、$m_0=4$ から始めた数列 $G(4)$ はどうなるのでしょうか？</p>
+            <ul style="margin-bottom: 1rem;">
+                <li>底が $b_k=3\cdot 2^{402653209}$ において最大値 $3\cdot 2^{402653210}-1$ に達する。</li>
+                <li>そのまま $3\cdot 2^{402653209}$ 項の間同じ値を取り続けてから、最初で最後の下降を始める。</li>
+                <li>そして、最終的に底が $b_k = 3 \cdot 2^{402653211} - 1$ のときに $m_k = 0$ となる。</li>
+            </ul>
+            <p>この $k$ の値に出てくる指数 $402,653,210$ は、観測可能な宇宙の原子の数（$10^{80}$ 程度）とは比較にならないほど巨大な数です。一般的な $m$ に対する数列 $G(m)$ が達する最大値は、現実的に計算不能なほど大きな数です。</p>
+            <p>「置換」のステップで数は爆発的に増え、「-1」のステップでほんの少し減るだけです。このゲームは、最終的にどうなると思いますか？</p>
+            
+            <div class="content-box theorem-box">
+                <h3 style="margin-top: 0.5rem; text-align: center;">グッドスタインの定理 (Goodstein's Theorem, 1944)</h3>
+                <p style="font-size: 1.15rem; font-weight: 500; color: #1f2937; text-align:center;">
+                    任意の自然数 $m$ に対し、グッドスタイン数列 $G(m)$ は0に収束する。
+                </p>
+            </div>
+        </div>
+
+        <!-- Chapter 2: The Tool -->
+        <div class="slide">
+            <h2>Chapter 2： 証明の道具「無限の物差し $\omega$」</h2>
+
+            <p>$m_k$ は増加するようにしか見えません。このままでは「いつか $0$ になる」ことは証明できません。</p>
+            <p style="font-weight: 700;">解決策：</p>
+            <ul>
+                <li>$m_k$ 自体とは<strong>別の</strong>、「<strong>$m_k > 0$ である限り必ず減り続け、かつ $m_k$ より大きい</strong>」ような数列、<strong>優数列</strong>を見つけます。</li>
+                <li>もし、その数列が「無限に減り続けることはできない」性質を持っていれば、それは有限回で底をつき、$m_k$ も $0$ になるはずです。</li>
+            </ul>
+            <p>ここで登場するのが、<strong>無限の物差し</strong>、すなわち<strong>順序数 (Ordinal Number)</strong> です。</p>
+
+            <h3>順序数 $\omega$ とは？ (平易な導入)</h3>
+            <p>皆さんが知っている数 $1, 2, 3, \dots$ には「個数」を数えるもの「<strong>基数</strong>」と、順番を数えるもの「<strong>序数</strong>」があります。
+            ここでは序数の概念の拡張、「<strong>順序数</strong>」を紹介します。
+            <p>無限人のマラソンランナーがゴールする順番を想像してください。
+                $1$位, $2$位, $3$位, $\dots$, $100$位, $\dots$ と、すべての自然数の順位が埋まってしまいました。</p>
+            <p><strong>問い:</strong> もし、この「全員」がゴールした後、<strong>さらに、もう一人</strong>がゴールしたら、その人の順位は何番目でしょうか？</p>
+
+            <div class="content-box" style="text-align: center;">
+                <p style="font-size: 1.1rem; text-align: center;">数学者は、この「すべての自然数の次」の順位に $\omega$（オメガ）という名前を付けました。</p>
+                <p style="font-size: 1.6rem; font-family: 'Times New Roman', serif; font-weight: bold; color: #4338ca; margin-top: 1rem; margin-bottom: 0.5rem; letter-spacing: 1px;">
+                    $$1, 2, 3, \dots, \omega$$
+                </p>
+            </div>
+
+            <p>$\omega$ は、私たちが初めて出会う「無限の順序数」です。この物差しは、$\omega$ で終わりません。</p>
+            <p style="font-family: 'Times New Roman', serif; text-align: center; font-size: 1.1rem; letter-spacing: 1px;">
+                $\dots, \omega, \omega+1, \omega+2, \dots, \omega \cdot 2, \dots, \omega^2, \dots, \omega^\omega, \dots$
+            </p>
+
+            <h3>順序数の「整列性」</h3>
+            <p>順序数には、証明に不可欠な性質があります。それは<strong>整列性 (Well-ordering)</strong> です。</p>
+            
+            <div class="content-box" style="background-color: #f3f4f6;">
+                <ol style="padding-left: 0;">
+                    <li style="display: flex; align-items: flex-start; margin-bottom: 1rem;">
+                        <span><strong style="font-weight: 700;">平易な言葉:</strong> 順序数の世界では、「<strong>無限に減少し続ける</strong>」ことが<strong>不可能</strong>です。（「$\dots, 3, 2, 1$」のような、スタート地点のない無限のカウントダウンは許されません。）</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; margin-bottom: 0;">
+                        <span><strong style="font-weight: 700;">少し厳密な言葉:</strong> 順序数の（空でない）集まりがあれば、その中には<strong>必ず「最小」のものが存在します</strong>。</span>
+                    </li>
+                </ol>
+            </div>
+            
+            <p>この性質により、もし順序数の減少する数列があれば（例： $\alpha_0 > \alpha_1 > \alpha_2 > \dots$）、その減少は<strong>必ず有限回で止まらなければなりません</strong>。これこそが、私たちが探していた「必ず減少し、いつか底をつく」物差しです！</p>
+        </div>
+
+        <!-- Chapter 3: The Proof -->
+        <div class="slide">
+            <h2>Chapter 3： 順序数による証明</h2>
+
+            <p>$m_k$ と、この「順序数」を結びつけます。$m_k$ に対応する「<strong>優数列 (superior sequence)</strong>」 $(\alpha_0, \alpha_1, \alpha_2, \dots)$ を次の方法で作ります。</p>
+
+            <div class="content-box rule-box">
+                <h3 style="margin-top: 0.5rem;">翻訳ルール（優数列の作り方）</h3>
+                <p style="margin-bottom: 0;">$k \ge 0$ に対し、$m_k$ の「遺伝的 $b_k$-進数表記」（$b_k = k+2$）について、<br><strong>底 $b_k$ を全て $\omega$ に置き換える</strong>。
+                <br>これが $\alpha_k$ です。</p>
+            </div>
+
+            <h3>やってみよう！ ($m_0 = 4$ の場合)</h3>
+
+            <!-- k=0 -->
+            <div class="content-box">
+                <h4><strong>$k=0$：</strong></h4>
+                <p>$m_0 = 2^{2^1}$ (底 $b_0=2$)</p>
+                <p style="color: #0891B2; font-size: 1.1rem; font-weight: 700; margin-bottom: 0;">$\alpha_0 = \omega^{\omega^1} = \mathbf{\omega^\omega}$</p>
+            </div>
+            <!-- k=1 -->
+            <div class="content-box">
+                <h4><strong>$k=1$：</strong></h4>
+                <p>$m_1 = 2 \cdot 3^2 + 2 \cdot 3^1 + 2 \cdot 3^0$ (底 $b_1=3$)</p>
+                <p style="color: #0891B2; font-size: 1.1rem; font-weight: 700; margin-bottom: 0;">$\alpha_1 = 2 \cdot \omega^2 + 2 \cdot \omega^1 + 2 \cdot \omega^0 = \mathbf{2\omega^2 + 2\omega + 2}$</p>
+            </div>
+            <!-- k=2 -->
+            <div class="content-box">
+                <h4><strong>$k=2$：</strong></h4>
+                <p>$m_2 = 2 \cdot 4^2 + 2 \cdot 4^1 + 1 \cdot 4^0$ (底 $b_2=4$)</p>
+                <p style="color: #0891B2; font-size: 1.1rem; font-weight: 700; margin-bottom: 0;">$\alpha_2 = 2 \cdot \omega^2 + 2 \cdot \omega^1 + 1 \cdot \omega^0 = \mathbf{2\omega^2 + 2\omega + 1}$</p>
+            </div>
+            <!-- k=3 -->
+            <div class="content-box">
+                <h4><strong>$k=3$：</strong></h4>
+                <p>$m_3 = 2 \cdot 5^2 + 2 \cdot 5^1$ (底 $b_3=5$)</p>
+                <p style="color: #0891B2; font-size: 1.1rem; font-weight: 700; margin-bottom: 0;">$\alpha_3 = 2 \cdot \omega^2 + 2 \cdot \omega^1 = \mathbf{2\omega^2 + 2\omega}$</p>
+            </div>
+            わかりやすさのため係数を右側に書いていますが、厳密には通常の順序数の演算の定義では係数は右側にかきます。
+            <br>
+
+            <h3>2つの数列の比較</h3>
+            
+            <p>
+                $m_k$ が増加している間も、その「優数列」である順序数 $\alpha_k$ は<strong>厳密に減少しています！</strong>
+                （ $\alpha_0 > \alpha_1 > \alpha_2 > \alpha_3 > \dots$ ）
+            </p>
+            <p>
+                なぜなら、$m_{k+1}$ を作る操作は「$b_k \to b_{k+1}$ に置換して $1$ を引く」でした。前者の底の置換は有数列を変化させません。よって「<strong>$-1$</strong>」の操作だけが優数列を変化させますが、これは対応する順序数の世界で、末尾の数を $1$ 減らしたり（例: $\alpha_1 \to \alpha_2$）、$\omega$ の項を $\omega$ より小さいもの（例: $\alpha_3 = 2\omega^2 + 2\omega$ が $2\omega^2 + \omega + (\text{自然数})$ になる）に置き換えたりするため、$\alpha_k\neq 0$ ならば <strong>必ず $\alpha_k > \alpha_{k+1}$ という真の減少を引き起こします</strong>。(詳細はChapter 5)
+            </p>
+
+            <div class="content-box theorem-box">
+                <h3 style="margin-top: 0.5rem;">証明の完結</h3>
+                <ol style="list-style-position: inside; text-align: left; padding-left: 0; display: inline-block;">
+                    <li style="margin-bottom: 0.8rem;">グッドスタイン数列 $\{m_k\}$ に対して、$m_k\leq \alpha _k$ なる優数列 $\{\alpha_k\}$ を作った。</li>
+                    <li style="margin-bottom: 0.8rem;">$m_k > 0$ である限り、次のステップで $\alpha_{k+1}$ は $\alpha_k$ より<strong>必ず減少する</strong>。 ($\alpha_0 > \alpha_1 > \alpha_2 > \dots$)</li>
+                    <li style="margin-bottom: 0.8rem;">【Chapter 2の重要ポイント】順序数の「<strong>整列性</strong>」により、順序数の減少列は<strong>必ず有限回で終了</strong>（底をつく）しなければならない。</li>
+                    <li style="margin-bottom: 0.8rem;">よって、必ず有限のステップ $N$ が存在し、$\alpha_N = 0$ となる。</li>
+                    <li style="margin-bottom: 0.8rem;">順序数 $\alpha_N$ が $0$ になるのは、対応する自然数 $m_N$ が $0$ になった時のみである。</li>
+                    <li style="font-weight: 700; color: #111827; font-size: 1.1rem; margin-top: 1rem; margin-bottom: 0;">したがって、グッドスタイン数列 $m_k$ は必ず有限回で $0$ に到達する。 (Q.E.D.)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Chapter 4: PA (REVISED) -->
+        <div class="slide">
+            <h2>Chapter 4： なぜ「無限」の道具が必要なのか？</h2>
+            
+            <p>この定理は「自然数」という有限の世界のゲームに関するものなのに、なぜ $\omega$ という「無限」の道具が必要だったのでしょうか？</p>
+            <p>実はこの定理、自然数の基本的な公理系である「<strong>ペアノ算術 (PA)</strong>」の範囲内では**証明できない**ことが知られています。</p>
+
+            <h3>ペアノ算術 (PA) とは？</h3>
+            <p>私たちが普段使う自然数の性質（$0$ がある、$+$ や $\times$ ができる、など）と、「数学的帰納法」を公理としてまとめた体系です。自然数に関するほとんどの基本的な定理はPAで証明できます。</p>
+            
+            <h3>PAで証明できない理由：不完全性定理との関係</h3>
+            <p>証明はできませんが、ロジックは以下のようになります。</p>
+            
+            <ol>
+                <li style="margin-bottom: 0.8rem;">
+                    <strong>グッドスタインの定理の証明 ＝ $\epsilon_0$ までの超限帰納法</strong><br>
+                    私たちがChapter 3で行った証明は、順序数の整列性を使いました。厳密には、この証明は $\epsilon_0$（$\omega, \omega^\omega, \omega^{\omega^\omega}, \dots$ の上限）という順序数までの「超限帰納法」と呼ばれる強力な道具と、論理的に同値（同じ強さを持つ）であることが知られています。
+                </li>
+                <li style="margin-bottom: 0.8rem;">
+                    <strong>$\epsilon_0$ までの超限帰納法 $\implies$ PAの無矛盾性</strong><br>
+                    ゲンツェンによる有名な結果（1936年）として、この「$\epsilon_0$ までの超限帰納法」を公理として認めると、ペアノ算術(PA)が矛盾しないこと（$0=1$ のような矛盾が導かれないこと）を証明できてしまいます。
+                </li>
+                <li style="margin-bottom: 0.8rem;">
+                    <strong>PAは「PAの無矛盾性」を証明できない</strong><br>
+                    一方、ゲーデルの第二不完全性定理により、PAがもし無矛盾であるならば、PA自身の無矛盾性をPAの内部で証明することはできません。
+                </li>
+            </ol>
+
+            <div class="content-box" style="border-left: 4px solid #c92a2a; background-color: #fff5f5;">
+                <h3 style="margin-top: 0.5rem; color: #c92a2a;">結論</h3>
+                <p style="margin-bottom: 0;">もしPAでグッドスタインの定理が証明できたと仮定すると、(1)によりPAで「$\epsilon_0$ までの超限帰納法」が証明できることになります。すると(2)によりPAで「PAの無矛盾性」が証明できてしまい、(3)の第二不完全性定理に矛盾します。</p>
+                <p style="font-weight: 700; margin-top: 0.5rem; margin-bottom: 0;">したがって、ペアノ算術(PA)の公理だけでは、グッドスタインの定理を証明することは不可能なのです。</p>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Appendix -->
+        <div class="slide">
+            <h2>Chapter 5： （補足）厳密な定義</h2>
+            
+            <p>興味のある方のために、順序数の厳密な定義をいくつか紹介します。</p>
+
+            <details>
+                <summary>1. 順序数の厳密な定義 (フォン・ノイマンによる)</summary>
+                <div class="details-content">
+                    <div class="content-box">
+                        <p>
+                            <ol>
+                            <li>
+                            <h4>半順序集合 (Partially Ordered Set, Poset)</h4>
+                            集合 $A$ 上の二項関係 $\le$ が半順序であるとは、すべての $a, b, c \in A$ について、以下の3つの公理（順序の公理）を満たすことをいう。
+                            <ul>
+                            <li>反射律 (Reflexivity):　$a \le a$</li>
+                            <li>反対称律 (Anti-symmetry):　$a \le b$ かつ $b \le a$ ならば $a = b$</li>
+                            <li>推移律 (Transitivity):　$a \le b$ かつ $b \le c$ ならば $a \le c$</li>
+                            </ul>
+                            この $(A, \le)$ を半順序集合と呼ぶ。
+
+                            <li>
+                            <h4>全順序集合 (Totally Ordered Set / Linearly Ordered Set)</h4>
+                            半順序集合 $(A, \le)$ が、さらに以下を満たすとき、全順序集合（または線形順序集合）と呼ぶ。<br>
+                            全順序性 (Totality / Comparability):　すべての $a, b \in A$ について、$a \le b$ または $b \le a$ の少なくとも一方が成り立つ。<br>
+                            （例：自然数の集合 $\mathbb{N}$ や実数の集合 $\mathbb{R}$ は、通常の大小関係 $\le$ のもとで全順序集合である。）
+                            </li>
+
+                            <li>
+                            <h4>整列集合 (Well-ordered Set)</h4>
+                            半順序半集合 $(A, \le)$ が整列集合（または $\le$ が整列順序）であるとは、以下の条件を満たすことをいう。<br>
+                            整列性:$A$ の空でない任意の部分集合 $S$ ($S \subseteq A, S \neq \emptyset$) は、必ず最小元（least element / minimum）を持つ。<br>
+                            （$m \in S$ が $S$ の最小元であるとは、すべての $s \in S$ に対して $m \le s$ が成り立つことをいう。）<br>
+                            整列性は、「真に降下する無限列 $\dots < a_3 < a_2 < a_1$ が存在しない」ことと同値である。<br>
+                            （例： $\mathbb{N} = \{0, 1, 2, \dots\}$ は整列集合である。しかし、 $\mathbb{Z} = \{\dots, -1, 0, 1, \dots\}$ や $\mathbb{R}$ は、最小元を持たない部分集合（例： $\mathbb{Z}$ 自身や、 $(0, 1)$）が存在するため、整列集合ではない。）
+                            </li>
+
+                            <li>
+                            <h4>順序数 (Ordinal Number)</h4>
+                            ある集合 $\alpha$ が順序数であるとは、以下の2つの条件を両方とも満たすことをいう。<br>
+                            <ul>
+                            <li>推移的集合 (Transitive Set) である:$\alpha$ のすべての要素は、$\alpha$ の部分集合でもある。（記号で書けば、 $\forall x (x \in \alpha \implies x \subseteq \alpha)$。これは $\forall y \forall x (y \in x \land x \in \alpha \implies y \in \alpha)$ と同値である。）</li>
+                            <li>$\in$ （集合の要素である関係）によって整列されている:$\alpha$ は、関係 $\in$ を順序関係とみなしたとき（$x < y \iff x \in y$ と定義したとき）、整列集合である。</li>
+                            </ul>
+                            この定義から、順序数は「それより小さい順序数すべてを要素として持つ集合」として構成される。
+                            $$
+                            \begin{align*}
+                            &0 \coloneqq \emptyset\\
+                            &1 \coloneqq \{0\} = \{\emptyset\}\\
+                            &2 \coloneqq \{0, 1\} = \{\emptyset, \{\emptyset\}\}\\
+                            &3 \coloneqq \{0, 1, 2\} = \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}\\
+                            \quad\quad\vdots\\
+                            &\omega \coloneqq \{0, 1, 2, 3, \dots\} \:\simeq \mathbb{N}\quad \text{（最初の無限順序数）}\\
+                            &\omega+1 \coloneqq \{0, 1, 2, \dots, \omega\} = \omega \cup \{\omega\}\\
+                            \quad\quad\vdots\\
+                            &\omega+\omega =\omega\cdot 2\:\simeq \mathbb{N}\times \{0\}\cup \mathbb{N}\times \{1\}\quad (\text{右を優先する辞書式順序})\\
+                            \quad\quad\vdots\\
+                            &\omega\cdot\omega=\omega^2\:\simeq \mathbb{N}^2\quad (辞書式順序)\\
+                            \quad\quad\vdots\\
+                            &\omega^{\omega}\quad\text{(有限個を除いて0である自然数列全体に右を優先する辞書式順序を入れたものに同型。濃度としては可算なことに注意)}\\
+                            \end{align*}
+                            $$
+                           
+                            「任意の整列集合 $(A, <)$ は、ただ一つの順序数 $\alpha$ と順序同型である」ことが証明されている。この $\alpha$ を $\text{Ord}(A, <)$ と書く。
+                            </li>
+                        順序数 $\alpha$ に対し、$\alpha$ より真に大きい($\alpha$ を含む)最小の順序数が $\alpha\cup\{\alpha\}$ であることがわかる。<br>
+                        これを $\alpha$ の後続者といい，$\alpha +1$ とかく。<br>
+                        また順序数は次の二つに分けられる。
+
+                        <ul>
+                            <li><strong>後続順序数 (Successor Ordinal):</strong> ある順序数の後続者である順序数(1以上の自然数や $\omega+1$ など)</li>
+                            <li><strong>極限順序数 (Limit Ordinal):</strong> $0$ でもなく、どの順序数の後続者でもない順序数（$\omega$ など）。</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+            
+            <details>
+                <summary>2. 順序数の演算（超限再帰による定義）</summary>
+                <div class="details-content">
+                    <div class="content-box">
+                        <p>順序数 $\alpha, \beta$ の演算は、$\beta$ に関する超限再帰によって定義される。（$\lambda$ は極限順序数を表す）</p>
+                        
+                        <h4>加法 ($\alpha + \beta$)</h4>
+                        <ul>
+                            <li>$\alpha + 0 = \alpha$</li>
+                            <li>$\alpha + (\beta+1) = (\alpha + \beta) + 1$</li>
+                            <li>$\alpha + \lambda = \sup_{\beta < \lambda} (\alpha + \beta)$ (sup は上限)</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #495057;">例： $1 + \omega = \sup_{n < \omega} (1 + n) = \omega$。しかし $\omega + 1 > \omega$。よって $1 + \omega \neq \omega + 1$ (交換法則は不成立)。</p>
+
+                        <h4>乗法 ($\alpha \cdot \beta$)</h4>
+                        <ul>
+                            <li>$\alpha \cdot 0 = 0$</li>
+                            <li>$\alpha \cdot (\beta+1) = (\alpha \cdot \beta) + \alpha$</li>
+                            <li>$\alpha \cdot \lambda = \sup_{\beta < \lambda} (\alpha \cdot \beta)$</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #495057;">例： $2 \cdot \omega = \sup_{n < \omega} (2 \cdot n) = \omega$。しかし $\omega \cdot 2 = \omega + \omega$。よって $2 \cdot \omega \neq \omega \cdot 2$ (交換法則は不成立)。</p>
+                        
+                        <h4>べき乗 ($\alpha^\beta$)</h4>
+                        <ul>
+                            <li>$\alpha^0 = 1$</li>
+                            <li>$\alpha^{(\beta+1)} = (\alpha^\beta) \cdot \alpha$</li>
+                            <li>$\alpha^\lambda = \sup_{\beta < \lambda} (\alpha^\beta)$ (ただし $\alpha > 0$)</li>
+                        </ul>
+
+                        <h4>演算の基本性質</h4>
+                        <ul>
+                            <li>加法の結合法則: $(\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$</li>
+                            <li>乗法の結合法則: $(\alpha \cdot \beta) \cdot \gamma = \alpha \cdot (\beta \cdot \gamma)$</li>
+                            <li>左分配法則: $\alpha \cdot (\beta + \gamma) = (\alpha \cdot \beta) + (\alpha \cdot \gamma)$</li>
+                            <li>(注意) <strong>右分配法則は不成立</strong>: $(1+1) \cdot \omega = 2 \cdot \omega = \omega$ だが、$(1 \cdot \omega) + (1 \cdot \omega) = \omega + \omega$。</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>3. 優数列が収束することの証明</summary>
+                <div class="details-content">
+                    <div class="content-box">
+                        $f(a, b)$ を、$a$ の遺伝的 $b$ 進表記の $b$ を $\omega$ に置き換えて得られる順序数と定義する。<br>
+                        $\alpha_k$ の定義から、
+                        $$ \alpha_k = f(m_k, b_k) \quad (b_k = k+2) $$
+                        $m_k \neq 0$ とすると、
+                        $m_{k+1}$ の作り方から、$m_{k+1} + 1$ の遺伝的 $b_{k+1}$ 進表記と $m_k$ の $b_k$ 進表記は同じなの
+                        で、
+                        $$f(m_k, b_k) = f(m_{k+1} + 1, b_{k+1})$$
+                        ここで、 
+                        $$f(a, b) < f(a+1, b) \quad (b\geq 2)\dots (*)$$
+                        が示せれば、
+                        $$ \alpha_{k+1} = f(m_{k+1}, b_{k+1}) < f(m_{k+1} + 1, b_{k+1}) = f(m_k, b_k) = \alpha_k $$
+                        となって証明が完了するから、$(*)$ を $a$ に関する帰納法で示す。<br>
+
+                        (i) $a=0$ のとき、$f(0, b) = 0$、 $f(1, b) = 1$ より明らか。<br>
+                        (ii) $(a \geq 1)$ とし、$\forall c < a$ で成立すると仮定して $a$ で成立することを示す。 <br>
+                        $a$ の通常の $b$ 進表記を
+                        $$ a = a_n b^n + \dots + a_1 b + a_0 \quad (0 \le a_i < b, a_n \neq 0) $$
+                        とすると,
+                        $$ f(a, b) = \omega^{f(n, b)} a_n + \dots + \omega a_1 + a_0 $$
+                        $a+1$ の $b$ 進表記を
+                        $$ a+1 = a'_{n+1} b^{n+1} + \dots + a'_i b^i + a'_0 \quad (0 \le a'_i < b) $$
+                        とする。
+                        <ul>
+                        <li>
+                        $a'_{n+1}=0$ のとき<br>
+                        $f(a+1,b)$ のカントール正規形は
+                        $$ f(a+1,b) =  \omega^{n+1}a'_{n+1} + \dots +  \omega^i a'_i + a'_0 \quad (0 \le a'_i < b, a'_n \neq 0) $$
+                        辞書式順序で $( a_n, \dots, a_1, a_0) < (a'_{n}, \dots, a'_i, a'_0)$ であり、カントール正規形の大小比較は係数の次数が高い方を優先する辞書式順序できまるため、
+                        $$ f(a, b) < f(a+1, b) $$
+                        </li>
+                        <li>
+                        $a'_{n+1}\neq 0$ のとき<br>
+                        今、$b^n\leq a$ より $n\leq \log_b a$．また、$a\geq 1,\:b\geq 2$ より、$\log_b a< a$ なので $n< a$ を得る。帰納法の仮定から、
+                        $f(n,b)< f(n+1,b)$ がわかるので、$f(a+1,b)$ のカントール正規形は
+                        $$ f(a+1, b) = \omega^{f(n+1, b)} a'_{n+1} + \dots + \omega a'_1 + a'_0 \quad (0 \le a'_i < b, a'_{n+1} \neq 0)$$
+                        係数を比較すると、最高次 $f(n+1,b)$ の係数が $0< a'_{n+1}$ より、
+                        $$ f(a, b) < f(a+1, b) $$
+                        </li>
+                        </ul>
+                        以上により
+                        $$ f(a, b) < f(a+1, b) $$
+                        が示されたので題意が従う。$\square$
+                    </div>
+                </div>
+            </details>
+           
+        </div>
+
+        <!-- Footer -->
+        <div class="slide">
+            <footer>
+                <p>
+                    この講義は、有限の数の不思議な振る舞いを、無限の順序数という道具を使って解き明かす一例を紹介するものでした。
+                </p>
+            </footer>
+        </div>
+
+    </div>
+
+    <script>
+        // KaTeXの自動レンダリングを実行
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

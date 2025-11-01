@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>講義資料: 無限の彼方へ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3NU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLrqOZrCvrsynAew亭8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURPlLufZt6SrS8AAP8xbNIahNXzVLBqowQHWsvOB1T" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: #f8f9fa; 
+        }
+        .slide {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        .slide h2 {
+            font-size: 1.8rem; /* 36px */
+            font-weight: 900;
+            border-bottom: 4px solid #4338ca;
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+            color: #111827;
+        }
+        .slide h3 {
+            font-size: 1.4rem; /* 28px */
+            font-weight: 700;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        .slide h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            margin-bottom: 0.3rem;
+            color: #1f2937;
+        }
+        .content-box {
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 0.5rem;
+            padding: 1rem 1.25rem; /* パディングを縮小 */
+            margin-top: 0.75rem; /* マージンを縮小 */
+            margin-bottom: 1.2rem;
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem; /* 18px */
+            border-radius: 0.5rem;
+            color: #3730a3;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        details summary:hover {
+            background-color: #e0e7ff;
+        }
+        details summary::before {
+            content: '▶';
+            margin-right: 0.75rem;
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl"> <!-- 幅を広く設定 -->
+
+        <!-- Title Slide -->
+        <header class="text-center mb-16">
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900">無限の彼方へ</h1>
+            <p class="text-lg text-gray-600 mt-8">発表者：片岡 竜士</p>
+        </header>
+
+        <!-- Slide: お品書き -->
+        <div class="slide">
+            <h2>お品書き</h2>
+            <p class="mb-4 text-lg">この講義では、「無限」という概念を巡り、数学の歴史における革命的な発見と、その深淵なる世界を探求する。</p>
+            <ol class="list-decimal list-inside space-y-2 pl-4" style="font-size: 1.125rem;">
+                <li>現実世界と可能無限</li>
+                <li>実無限という革命 〜集合論の世界〜</li>
+                <li>数学の危機と形式化</li>
+                <li>数学の限界 〜終わりなき知の探求〜</li>
+                <li>そしてコンピュータへ</li>
+            </ol>
+        </div>
+
+        <!-- Section 1: 現実世界と可能無限 -->
+        <div class="slide">
+            <h2>1. 現実世界と可能無限</h2>
+            
+            <div class="content-box">
+                <h3>「無限」とは何か？</h3>
+                <p>無限とは<strong>「有限でない」</strong>こと。つまり、終わりがなく、どんな自然数$N$でも大きさを抑えられない概念を指す。</p>
+            </div>
+
+            <div class="content-box">
+                <h3>現実世界に「無限」は存在するか？</h3>
+                <p>我々の宇宙は、想像を絶するほど巨大であるが、物理的には<strong>「有限」</strong>であると考えられている。</p>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                    <li>地球上の砂粒の数：約 $7.5 \times 10^{18}$ 粒 (750京)</li>
+                    <li>観測可能な宇宙の原子の数：約 $10^{80}$ 個</li>
+                    <li>宇宙の年齢：約 138億年</li>
+                </ul>
+                <p class="mt-4 font-bold text-center text-indigo-800">⇨物理的なモノや時間は、とてつもなく大きいが有限である。</p>
+            </div>
+
+            <div class="content-box">
+                <h3>考え方としての無限：可能無限</h3>
+                <p>古代ギリシャには「アキレスと亀」という有名なパラドックスがある。俊足のアキレスは、少し先を行く亀にいつまでも追いつけないように見える。なぜなら、アキレスが亀のいた地点に着くたびに、亀は少し先に進んでいるからである。
+                </p>
+                <div class="my-4 flex justify-center">
+                    <svg width="100%" height="250" viewBox="0 0 800 250" xmlns="http://www.w.org/2000/svg">
+                
+                        <!-- 矢印の先端部分（マーカー）の定義 -->
+                        <defs>
+                            <marker 
+                                id="arrow-marker-achilles" 
+                                viewBox="0 0 10 10" 
+                                refX="8" 
+                                refY="5"
+                                markerWidth="5" 
+                                markerHeight="5" 
+                                orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#4f46e5" />
+                            </marker>
+                        </defs>
+                
+                        <!-- スタイルの定義 -->
+                        <style>
+                            .label {
+                                font-family: serif;
+                                font-size: 20px;
+                            }
+                            .runner-label {
+                                font-size: 24px;
+                                font-family: serif;
+                                font-weight: bold;
+                                text-anchor: middle;
+                            }
+                            .step-label {
+                                font-size: 16px;
+                                fill: #4f46e5;
+                                font-family: sans-serif;
+                                text-anchor: middle;
+                            }
+                            .track {
+                                stroke: #9ca3af;
+                                stroke-width: 2;
+                            }
+                            .arrow {
+                                stroke: #4f46e5;
+                                stroke-width: 2.5;
+                                fill: none;
+                                marker-end: url(#arrow-marker-achilles);
+                            }
+                        </style>
+                
+                        <!-- レーストラック -->
+                        <line x1="20" y1="220" x2="780" y2="220" class="track" />
+                
+                        <!-- Step 1 -->
+                        <g id="step1">
+                            <text x="50" y="210" class="runner-label">A<tspan dy="5" font-size="0.7em">1</tspan></text>
+                            <text x="300" y="210" class="runner-label">T<tspan dy="5" font-size="0.7em">1</tspan></text>
+                            <path d="M 60 180 Q 180 140 300 180" class="arrow" />
+                            <text x="180" y="135" class="step-label">Step 1</text>
+                        </g>
+                
+                        <!-- Step 2 -->
+                        <g id="step2">
+                            <text x="300" y="170" class="runner-label">A<tspan dy="5" font-size="0.7em">2</tspan></text>
+                            <text x="450" y="170" class="runner-label">T<tspan dy="5" font-size="0.7em">2</tspan></text>
+                            <path d="M 310 140 Q 380 110 450 140" class="arrow" />
+                            <text x="380" y="105" class="step-label">Step 2</text>
+                        </g>
+                
+                        <!-- Step 3 -->
+                        <g id="step3">
+                            <text x="450" y="130" class="runner-label">A<tspan dy="5" font-size="0.7em">3</tspan></text>
+                            <text x="525" y="130" class="runner-label">T<tspan dy="5" font-size="0.7em">3</tspan></text>
+                            <path d="M 460 100 Q 492.5 80 525 100" class="arrow" />
+                            <text x="492.5" y="75" class="step-label">Step 3</text>
+                        </g>
+
+                        <!-- Step 4 -->
+                        <g id="step4">
+                            <text x="525" y="90" class="runner-label">A<tspan dy="5" font-size="0.7em">4</tspan></text>
+                            <text x="562.5" y="90" class="runner-label">T<tspan dy="5" font-size="0.7em">4</tspan></text>
+                            <path d="M 535 60 Q 548.75 50 562.5 60" class="arrow" />
+                            <text x="580" y="55" class="step-label">...</text>
+                        </g>
+                
+                    </svg>
+                </div>
+                <p>このようなステップは際限なく続くので、いつまでもアキレスは亀に追いつけないように見える。現実では無限級数の収束によりどこかのタイミングで追いつけるのだが、このように、無限を「終わりなきプロセス・アルゴリズム」として捉える立場を<strong>可能無限 (Potential Infinity)</strong>と呼ぶ。高校で習う極限の概念、例えば $\lim_{n \to \infty} \frac{1}{n} = 0$ などは、この考え方に基づいている。</p>
+            </div>
+             <div class="content-box">
+                <h3>そもそも数とは何か？</h3>
+                <p>リンゴが2個あっても、リンゴ自体は数字の「2」ではない。数は、現実のモノではなく、私たちの思考の中に存在する純粋な<strong>概念</strong>である。</p>
+                <ul class="list-disc list-inside mt-2 space-y-2">
+                    <li><strong>プラトンのイデア論</strong>: 「2」という完璧なイデア（真の姿）がイデア界に実在し、現実のリンゴはそれを不完全に模倣しているに過ぎない。</li>
+                    <li><strong>現代数学の立場</strong>: 「数」とは何かを問うのではなく、公理（ルール）の上で他の対象とどう関係するかによって、その役割を定義する。</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section 2: 実無限 -->
+        <div class="slide">
+            <h2>2. 実無限という革命 〜集合論の世界〜</h2>
+            <p class="mb-4">カントールはフーリエ級数の研究の中で無限個の点の集まりを考え始め、ついに無限集合を一つの対象として扱う<strong>実無限</strong>の概念に達した。</p>
+            <div class="content-box">
+                <h3>要素数の概念の拡張としての「濃度」</h3>
+                <p>有限集合の「要素の個数」を数えるとき、私たちは無意識に頭の中で対象と数詞を「一対一対応」させている。カントールはこの素朴なアイデアを厳密化し、無限にまで拡張した。</p>
+                 <div class="my-4 flex justify-center items-center">
+                    <svg width="100%" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 矢印の先端部分の定義 -->
+                            <defs>
+                                <marker 
+                                    id="arrowhead" 
+                                    viewBox="0 0 10 10" 
+                                    refX="8" 
+                                    refY="5"
+                                    markerWidth="6" 
+                                    markerHeight="6" 
+                                    orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />
+                                </marker>
+                            </defs>
+                    
+                            <!-- 左の集合 (A) -->
+                            <g>
+                                <text x="75" y="20" font-size="18" text-anchor="middle">集合 A</text>
+                                <ellipse cx="75" cy="110" rx="50" ry="80" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+                                <!-- 要素 a -->
+                                <circle cx="75" cy="50" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="75" y="55" font-size="16" text-anchor="middle">a</text>
+                                <!-- 要素 b -->
+                                <circle cx="75" cy="110" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="75" y="115" font-size="16" text-anchor="middle">b</text>
+                                <!-- 要素 c -->
+                                <circle cx="75" cy="170" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="75" y="175" font-size="16" text-anchor="middle">c</text>
+                            </g>
+                    
+                            <!-- 右の集合 (B) -->
+                            <g>
+                                <text x="325" y="20" font-size="18" text-anchor="middle">集合 B</text>
+                                <ellipse cx="325" cy="110" rx="50" ry="80" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+                                <!-- 要素 1 -->
+                                <circle cx="325" cy="50" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="325" y="55" font-size="16" text-anchor="middle">1</text>
+                                <!-- 要素 2 -->
+                                <circle cx="325" cy="110" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="325" y="115" font-size="16" text-anchor="middle">2</text>
+                                <!-- 要素 3 -->
+                                <circle cx="325" cy="170" r="18" fill="white" stroke="#60a5fa" stroke-width="2"/>
+                                <text x="325" y="175" font-size="16" text-anchor="middle">3</text>
+                            </g>
+                    
+                            <!-- 対応を示す矢印 -->
+                            <g stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead)">
+                                <line x1="93" y1="50" x2="307" y2="50" />
+                                <line x1="93" y1="110" x2="307" y2="110" />
+                                <line x1="93" y1="170" x2="307" y2="170" />
+                            </g>
+                    </svg>
+                 </div>
+                <p class="p-3 bg-indigo-50 border border-indigo-200 rounded-md"><strong>定義（濃度の相等）</strong>: 集合$A$と集合$B$の間に<strong>全単射</strong>（一対一で過不足のない対応）が存在するとき、$A$と$B$の濃度は等しいといい、$|A|=|B|$と書く。これは要素数の概念の自然な拡張である。</p>
+            </div>
+            無限集合では、有限ではあり得なかった一部が全体と同等ということが起こりうる。
+            <div class="content-box">
+                <h3>ヒルベルトのホテル：無限の不思議な性質</h3>
+                <p>無限個の部屋数のあるホテルがあり、全室満室とする。</p>   
+                <div class="my-4 p-4 border rounded-lg">
+                    <h4 class="font-bold">状況1：新しい客が1人来た場合 ( $n \to n+1$ )</h4> 
+                    <svg width="100%" height="200" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                    
+                            <!-- 矢印の先端部分（マーカー）の定義 -->
+                            <defs>
+                                <marker 
+                                    id="arrow-marker" 
+                                    viewBox="0 0 10 10" 
+                                    refX="8" 
+                                    refY="5"
+                                    markerWidth="5" 
+                                    markerHeight="5" 
+                                    orient="auto">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#c026d3" />
+                                </marker>
+                            </defs>
+                    
+                            <!-- スタイルの定義 -->
+                            <style>
+                                .room {
+                                    stroke-width: 1.5;
+                                }
+                                .occupied {
+                                    fill: #fdf2f8; /* ピンク色 */
+                                    stroke: #db2777; /* 濃いピンク */
+                                }
+                                .vacant {
+                                    fill: #f0fdf4; /* 緑色 */
+                                    stroke: #16a34a; /* 濃い緑 */
+                                }
+                                .room-number {
+                                    font-family: monospace;
+                                    font-size: 14px;
+                                    text-anchor: middle;
+                                }
+                                .label {
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    fill: #4b5563; /* グレー */
+                                }
+                                .arrow {
+                                    stroke: #c026d3; /* 紫色 */
+                                    stroke-width: 2;
+                                    fill: none;
+                                    marker-end: url(#arrow-marker);
+                                }
+                            </style>
+                    
+                            <!-- 移動前の行 -->
+                            <g id="before-state">
+                                <text x="10" y="45" class="label">移動前:</text>
+                                <!-- 部屋 1 -->
+                                <rect x="80" y="30" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="105" y="50" class="room-number">1号室</text>
+                                <!-- 部屋 2 -->
+                                <rect x="160" y="30" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="185" y="50" class="room-number">2号室</text>
+                                <!-- 部屋 3 -->
+                                <rect x="240" y="30" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="265" y="50" class="room-number">3号室</text>
+                                <!-- ... -->
+                                <text x="320" y="50" font-size="20">...</text>
+                                <rect x="345" y="30" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="370" y="50" class="room-number">n号室</text>
+                            </g>
+                    
+                            <!-- 移動後の行 -->
+                            <g id="after-state">
+                                <text x="10" y="145" class="label">移動後:</text>
+                                <!-- 部屋 1 (空室) -->
+                                <rect x="80" y="130" width="50" height="30" rx="4" class="room vacant" />
+                                <text x="105" y="150" class="room-number" fill="#16a34a">空室</text>
+                                <!-- 部屋 2 -->
+                                <rect x="160" y="130" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="185" y="150" class="room-number">2号室</text>
+                                <!-- 部屋 3 -->
+                                <rect x="240" y="130" width="50" height="30" rx="4" class="room occupied" />
+                                <text x="265" y="150" class="room-number">3号室</text>
+                                <!-- ... -->
+                                <text x="325" y="150" font-size="20">...</text>
+                                <rect x="370" y="130" width="70" height="30" rx="4" class="room occupied" />
+                                <text x="405" y="150" class="room-number">n+1号室</text>
+                            </g>
+                    
+                            <!-- 対応を示す矢印 -->
+                            <g id="movement-arrows">
+                                <!-- 1号室の客 -> 2号室へ -->
+                                <path d="M 105 60 C 105 95, 185 95, 185 130" class="arrow" />
+                                <!-- 2号室の客 -> 3号室へ -->
+                                <path d="M 185 60 C 185 95, 265 95, 265 130" class="arrow" />
+                                <!-- n 号室の客 -> n+1 号室へ -->
+                                <path d="M 370 60 C 370 95, 405 95, 405 130" class="arrow" />
+                            </g>
+                    </svg>
+                </div>
+                <div class="my-4 p-4 border rounded-lg">
+                    <h4 class="font-bold">状況2：無限人の団体客が来た場合 ( $n \to 2n$ )</h4>
+                        <svg width="100%" height="220" viewBox="0 0 650 220" xmlns="http://www.w3.org/2000/svg">
+                
+                        <!-- 矢印の先端部分（マーカー）の定義 -->
+                        <defs>
+                            <marker 
+                                id="arrow-marker-infinite" 
+                                viewBox="0 0 10 10" 
+                                refX="8" 
+                                refY="5"
+                                markerWidth="5" 
+                                markerHeight="5" 
+                                orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669" />
+                            </marker>
+                        </defs>
+                
+                        <!-- スタイルの定義 -->
+                        <style>
+                            .room {
+                                stroke-width: 1.5;
+                            }
+                            .occupied {
+                                fill: #dcfce7; /* 明るい緑 */
+                                stroke: #16a34a; /* 緑 */
+                            }
+                            .vacant {
+                                fill: #f1f5f9; /* グレー */
+                                stroke: #9ca3af; /* 濃いグレー */
+                            }
+                            .room-number {
+                                font-family: monospace;
+                                font-size: 14px;
+                                text-anchor: middle;
+                            }
+                            .label {
+                                font-size: 14px;
+                                font-weight: bold;
+                                fill: #4b5563; /* グレー */
+                            }
+                            .arrow {
+                                stroke: #059669; /* 緑 */
+                                stroke-width: 2;
+                                fill: none;
+                                marker-end: url(#arrow-marker-infinite);
+                            }
+                        </style>
+                
+                        <!-- 移動前の行 -->
+                        <g id="before-state">
+                            <text x="10" y="45" class="label">移動前:</text>
+                            <!-- 部屋 1 -->
+                            <rect x="80" y="30" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="105" y="50" class="room-number">1号室</text>
+                            <!-- 部屋 2 -->
+                            <rect x="160" y="30" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="185" y="50" class="room-number">2号室</text>
+                            <!-- 部屋 3 -->
+                            <rect x="240" y="30" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="265" y="50" class="room-number">3号室</text>
+                            <!-- ... -->
+                            <text x="325" y="50" font-size="20">...</text>
+                            <rect x="350" y="30" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="375" y="50" class="room-number">
+                                n号室
+                            </text>
+                        </g>
+                
+                        <!-- 移動後の行 -->
+                        <g id="after-state">
+                            <text x="10" y="165" class="label">移動後:</text>
+                            <!-- 部屋 1 (空室) -->
+                            <rect x="80" y="150" width="50" height="30" rx="4" class="room vacant" />
+                            <text x="105" y="170" class="room-number" fill="#166534">空室</text>
+                            <!-- 部屋 2 -->
+                            <rect x="160" y="150" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="185" y="170" class="room-number">2号室</text>
+                            <!-- 部屋 3 (空室) -->
+                            <rect x="240" y="150" width="50" height="30" rx="4" class="room vacant" />
+                            <text x="265" y="170" class="room-number" fill="#166534">空室</text>
+                            <!-- 部屋 4 -->
+                            <rect x="320" y="150" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="345" y="170" class="room-number">4号室</text>
+                            <!-- 部屋 5 (空室) -->
+                            <rect x="400" y="150" width="50" height="30" rx="4" class="room vacant" />
+                            <text x="425" y="170" class="room-number" fill="#166534">空室</text>
+                            <!-- 部屋 6 -->
+                            <rect x="480" y="150" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="505" y="170" class="room-number">6号室</text>
+                            <!-- ... -->
+                            <text x="550" y="170" font-size="20">...</text>
+                            <rect x="575" y="150" width="50" height="30" rx="4" class="room occupied" />
+                            <text x="600" y="170" class="room-number">
+                                2n号室
+                            </text>
+                        </g>
+                
+                        <!-- 対応を示す矢印 -->
+                        <g id="movement-arrows">
+                            <!-- 1号室の客 -> 2号室へ -->
+                            <path d="M 105 60 C 105 105, 185 105, 185 150" class="arrow" />
+                            <!-- 2号室の客 -> 4号室へ -->
+                            <path d="M 185 60 C 185 85, 345 85, 345 150" class="arrow" />
+                            <!-- 3号室の客 -> 6号室へ -->
+                            <path d="M 265 60 C 265 75, 505 75, 505 150" class="arrow" />
+                            <!-- n号室の客 -> 2n号室へ -->
+                            <path d="M 375 60 C 375 65, 595 65, 595 150" class="arrow" />
+                        </g>
+                        </svg>
+                </div>
+            </div>
+            <div class="content-box">
+                <h3>対角線論法：無限にも階級がある</h3>
+                <p class="font-bold">主張: 実数の集合$\mathbb{R}$は、自然数の集合$\mathbb{N}$より真に濃度が大きい。$|\mathbb{N}| < |\mathbb{R}|$</p>
+            
+            <details class="mt-2">
+                <summary>証明（背理法）</summary>
+                <div>
+                    <ol class="list-decimal list-inside space-y-3 mt-2">
+                        <li><strong>仮定</strong>: $|\mathbb{N}| = |(0, 1)|$だと仮定する。すると、自然数と$(0,1)$区間の実数との間に全単射$f$が存在し、この区間のすべての実数を番号付けしてリストアップできるはずである。
+                            無限小数展開の一意性から、一般の $n$ 進法において、任意の0でない実数は無限小数(途中からずっと0ということがない)の形に一意的に表せるので、ここでは慣れ親しんだ10進法として(実際には3以上ならOK)、
+                        $$
+                        \begin{array}{lcl}
+                        f(1) & = & 0. \mathbf{a_{11}} a_{12} a_{13} \dots \\
+                        f(2) & = & 0. a_{21} \mathbf{a_{22}} a_{23} \dots \\
+                        f(3) & = & 0. a_{31} a_{32} \mathbf{a_{33}} \dots \\
+                        \vdots & & \vdots
+                        \end{array}
+                        $$
+                        という対応表が得られる。ただし、0.5などの有限小数は0.4999...と表している。
+                        </li>
+                        <li><strong>構成</strong>: このリストのどこにも存在しないはずの新しい実数 $b = 0.b_1 b_2 b_3 \dots$ を意図的に作る。作り方は、リストの対角成分$a_{nn}$と異なる数字を$b_n$に選ぶだけである。
+                        $$
+                        b_n = \begin{cases} 1 & (\text{もし } a_{nn} \neq 1 \text{ なら}) \\ 2 & (\text{もし } a_{nn} = 1 \text{ なら}) \end{cases}
+                        $$
+                        構成から $0.1\leq b \leq 0.3$ ゆえ $b\in (0,1)$．
+                        さらに途中からずっと0ということもないので無限小数であるから、小数展開の一意性と仮定によりこの対応表のどこかに現れなければならない。
+                        </li>
+                        <li><strong>比較</strong>: しかしこうして作られた数$b$は、リスト上のどの数$f(n)$とも異なる。
+                            <ul class="list-disc list-inside ml-4 text-sm">
+                                <li>$b$は$f(1)$と違う（小数第1位が$a_{11}$と違うから）</li>
+                                <li>$b$は$f(2)$と違う（小数第2位が$a_{22}$と違うから）</li>
+                                <li>一般に、$b$は$f(n)$と違う（小数第$n$位が$a_{nn}$と違うから）</li>
+                            </ul>
+                        </li>
+                        <li><strong>矛盾</strong>: これは、「リストが$(0, 1)$の**すべての**実数を網羅している」という最初の仮定に矛盾する。</li>
+                        <li><strong>結論</strong>: したがって、そのような全単射は存在せず、$|\mathbb{N}| < |(0, 1)| \le |\mathbb{R}|$ である。</li>
+                    </ol>
+                </div>
+            </details>
+            </div>
+            <div class="content-box mt-8">
+                <h4 class="font-bold text-center text-lg mb-2">【コラム】集合論で分かる「自然な」定義</h4>
+                <ul class="space-y-3 text-sm md:text-base">
+                    <li><strong>$0! = 1$ はなぜか？</strong><br>階乗$n!$は「濃度$n$の集合の要素の並べ替えの総数（自己全単射の個数）」と解釈できる。濃度$0$の集合（空集合$\emptyset$）から$\emptyset$への全単射は「何もしない」という**唯一通り**の方法（空写像）が存在するため。</li>
+                    <li><strong>$0^0 = 1$ はなぜか？</strong><br>指数$m^n$は「濃度$n$の集合から濃度$m$の集合への写像の総数」。$0^0$は「$\emptyset$から$\emptyset$への写像の総数」であり、これも**空写像**ただ一つだけが存在するため。</li>
+                    <li><strong>$0 \cdot \infty = 0$ はなぜか？</strong><br>乗算$m \cdot n$は「濃度$m,n$の集合の直積集合の濃度」。濃度$0$の集合$\emptyset$と無限集合$\mathbb{N}$の直積$\emptyset \times \mathbb{N}$を考えると、ペア$(x,y)$を作るための元$x \in \emptyset$が取れない。よって直積集合は$\emptyset$となり、その濃度は$0$であるため。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: 数学の危機と形式化 -->
+        <div class="slide">
+            <h2>3. 数学の危機と形式化</h2>
+            集合論は数学のほとんど全てをその上で行えるほどに強力な論理基盤であったが、その強力さゆえに多くの不可解なパラドックスを引き起こす。
+            <div class="content-box">
+                <h3>パラドックスの噴出</h3>
+                
+                <h4 style="margin-bottom: 0.5rem;"><strong>カントールのパラドックス</strong> (最大の集合は存在しない)</h4>
+                <p>もし全ての集合を含む集合 $U$が存在すると仮定する。カントールの定理より任意の集合 $A$ について $|A| < |\mathcal{P}(A)|$ なので、$|U| < |\mathcal{P}(U)|$．しかし、$\mathcal{P}(U)$ の要素はすべて集合だから $U$ の定義より $U$ に含まれる。つまり $\mathcal{P}(U) \subseteq U$なので$|\mathcal{P}(U)| \le |U|$。これは$|U| < |U|$となり矛盾。</p>
+            <br><br>
+                <h4 style="margin-bottom: 0.5rem;"><strong>ラッセルのパラドックス：自己言及の罠</strong></h4>
+                <ol class="list-decimal list-inside space-y-3">
+                    <li><strong>前提</strong>: 素朴集合論では、任意の性質$\phi(x)$に対し、その性質を満たす集合$\{x \mid \phi(x)\}$が存在するとされた（無制限の内包公理）。</li>
+                    <li><strong>定義</strong>: 内包公理の元で、性質$\phi(x)$として「$x$が$x$自身を要素として含まない」、すなわち $x \notin x$ を考える。この性質を満たす全ての集合を集めた集合$R$を定義する。
+                    $$ R = \{x \mid x \notin x\} $$</li>
+                    <li><strong>問い</strong>: この集合$R$は、$R$自身を要素として含むか？ すなわち、「$R \in R$」は真か偽か？</li>
+                    <li><strong>場合分けによる矛盾の導出</strong>:
+                        <ul class="list-disc list-inside ml-4 mt-2 space-y-2">
+                            <li><strong>もし「$R \in R$」が真だと仮定すると…</strong><br>
+                            $R$は$R$の要素なので、$R$は$R$の定義 $\{x \mid x \notin x\}$ を満たす必要がある。つまり、$R$は「自分自身を含まない」という性質を持つはずである。よって、$R \notin R$ となる。これは最初の仮定「$R \in R$」と矛盾する。</li>
+                            <li><strong>もし「$R \notin R$」が真だと仮定すると…</strong><br>
+                            $R$は「自分自身を含まない」という性質を持つ。これはまさに集合$R$が満たすべき定義そのものである。したがって、$R$は集合$R$の要素でなければならない。よって、$R \in R$ となる。これも最初の仮定「$R \notin R$」と矛盾する。</li>
+                        </ul>
+                    </li>
+                     <li><strong>結論</strong>: どちらの場合でも矛盾するため、そもそも集合$R$の存在を許した内包公理それ自体が矛盾を生みだしていることが示された。</li>
+                </ol>
+            </div>
+
+            <div class="content-box">
+                <h3 class="mt-8">パラドックスの回避</h3>
+                上記のパラドックスを回避し集合論というカントールの楽園を取り戻すべく、集合論を厳密に記号論理により公理化する動きが始まる。
+                    <h4 style="margin-bottom: 0.5rem;"><strong>分出公理 (Axiom of Separation)</strong>：</h4>
+                    <p>矛盾の原因である「無制限の内包公理」を制限した。「<strong>すでにある集合$A$</strong>と性質$\phi(x)$に対し、その中で性質を満たす要素だけを集めた<strong>部分集合</strong>$\{x \in A \mid \phi(x)\}$が存在する」と定めた。
+                    $$ \forall A \forall \phi \exists Y \forall x (x \in Y \iff (x \in A \land \phi(x))) $$
+                    これにより、集合は「無から」作るのではなく「既存の集合から選び出す」ことしかできなくなった。</p>
+                    <br><br>
+                    <h4 style="margin-bottom: 0.5rem;"><strong>選択公理 (Axiom of Choice, AC)</strong>：</h4>
+                    <p><strong>主張</strong>: 空でない集合の集まりがあったとき、それぞれの集合から要素を一つずつ選び出して、新しい集合(選択集合)を作ることができる。
+                        具体的には、任意の空でない集合の族 $\left\{A_{\lambda}\right\}_{\lambda\in \Lambda}$ について，$$\prod_{\lambda\in\Lambda}A_{\lambda}\neq 0$$
+                    </p>
+                    <ul class="list-disc list-inside mt-2 space-y-2">
+                        <li><strong>自明に見える側面</strong>: この公理を仮定しないと、「集合の無限和の濃度は、その直和の濃度以下である」ことですら一般には証明できない。つまり、集合族 $\{A_{\lambda}\}_{\lambda\in \Lambda}$ について
+                        $$
+                        \left| \bigcup_{\lambda \in \Lambda} A_{\lambda} \right| \le \left| \sum_{\lambda \in \lambda} A_{\lambda} \right|
+                        $$
+                        となることも選択公理がないと一般に示せなくなる。
+                        </li>
+                        <li><strong>恐ろしい側面：バナッハ＝タルスキーの定理</strong>: 選択公理を認めると、「球体を有限個の部分に分割し、回転・平行移動させるだけで、元の球体と全く同じ大きさの球体を2つ作れる」という定理が証明されてしまう。</li>
+                    </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: 数学の限界 -->
+        <div class="slide">
+            <h2>4. 数学の限界 〜終わりなき知の探求〜</h2>
+            　公理化によりパラドックスは回避できたかに思えたが、今度はそれがもう完全に回避できていると、もう矛盾は絶対に起こらないのだと証明したくなる。
+            <div class="content-box">
+                <h3>ヒルベルト・プログラム</h3>
+                <p>　20世紀初頭、ダーフィット・ヒルベルトは、数学の形式化を通じて数学の正しさを証明しようとする壮大な計画を提唱した。その目標は各形式体系の：</p>
+                <ol class="list-decimal list-inside space-y-1 mt-2">
+                    <li><strong>無矛盾性</strong>: 矛盾が証明されることはない。i.e. 証明も反証もできる命題は存在しない。</li>
+                    <li><strong>完全性</strong>: 任意の命題は証明可能または反証可能である。</li>
+                    <li><strong>決定可能性</strong>: 任意の命題が証明可能かを判定する実効的なアルゴリズムが存在する。</li>
+                </ol>
+                <p>を、有限の立場と呼ばれるかなり直感的に誰にとっても正しいと思われる体系から証明することであった。</p>
+                    <br>
+                <p>　有限の立場の定義はヒルベルト自身も曖昧にしていたが、原始再帰的算術(PRA)がよくこれに当たるとされる。
+                    これを数学における、カントの認識論のアプリオリであるととらえ、この誰でも正しいと思えるほど弱いメタ体系の中で強い体系の無矛盾性や完全性を示せれば数学の正しさは確保されたと考える論法である。
+                </p>
+            </div>
+            
+            <div class="content-box">
+                <h3>ゲーデルの不完全性定理 (1931)</h3>
+                <div class="mt-2 p-4 bg-red-50 border border-red-200 rounded-md space-y-3">
+                    <p><strong>第一不完全性定理</strong>: 
+                    初等自然数論を含む、$\omega$ 無矛盾で再帰的に公理化可能な任意の形式的体系$T$には、証明も反証もできない命題$G$が必ず存在する。</p>
+                    <p><strong>第二不完全性定理</strong>: 
+                    初等自然数論を含む無矛盾で再帰的に公理化可能な任意の形式的体系$T$は、T自身の無矛盾性を主張する命題$Con(T)$を、$T$の内部では証明できない。</p>
+                </div>
+                <p>　これにより、ヒルベルト・プログラムの目標は有限の立場からでは不可能であることが示された。
+                    これはある意味で数学の絶対的な正しさは誰もがわかるアプリオリ的な形では証明できないことがアプリオリの範囲で証明できてしまったということになる。</p>
+                <p class="mt-3 font-bold text-indigo-800">　しかし、これは数学の破綻を意味するわけではない。理論を無矛盾な範囲でいくらでも拡張する余地があるということでもあり、数学というものの可能性が無限に広がっている、数学は終わりなき知の探求であるということを表しているとも言える。
+                
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 5: そしてコンピュータへ -->
+        <div class="slide">
+            <h2>5. そしてコンピュータへ</h2>
+            <div class="content-box">
+                <h3>計算とは何か？ そして決定問題の結末</h3>
+                <p>ゲーデルはゲーデル数化を通じて"証明"の概念を自然数の計算に落とし込んだ。これを足がかりに、残るプログラム第3の目標：決定可能性の真偽を探るには、実効的なアルゴリズムとは何か、計算とは何かを定義する必要がある。
+                </p>
+            </div>
+            
+            <div class="content-box">
+                <h3>チューリングマシンと停止性問題</h3>
+                <p>1936年、アラン・チューリングは「計算」の厳密なモデルとして<strong>「チューリングマシン」</strong>を考案した。そして、このモデルを用いて<strong>停止性問題 (Halting Problem)</strong>を定式化した。</p>
+                <blockquote class="border-l-4 border-gray-400 pl-4 my-3 italic">
+                「任意のプログラムとその入力が与えられたとき、そのプログラムが有限時間で停止するか、無限ループに陥るかを、判定する万能なアルゴリズムは存在するか？」
+                </blockquote>
+                <p>チューリングは、この停止性問題を判定する万能なアルゴリズムは<strong>存在しない</strong>ことを数学的に証明した。ここから第3目標の決定可能性も否定的に解決され、さらにこの停止性問題の決定不能性が、ゲーデルの第一不完全性定理の決定不能命題の具体例を構成する。</p>
+            </div>
+
+            <div class="content-box">
+                <h3 class="!mt-0">まとめ</h3>
+                <p>「証明できること」（ゲーデル）と「計算できること」（チューリング）の限界は、数学の基礎を固めようとする純粋な探求の中から明らかにされた。そして皮肉なことに、目的自体は否定的に解決したが、その限界を探る過程で生まれた「計算」の厳密な理論が、ジョン・フォン・ノイマンなどによる理論の肉付けの結果を経て、意図せずして今日我々が目にする情報化社会の礎を築いたのである。</p>
+            </div>
+        </div>
+
+        <!-- Final Slide -->
+        <div class="text-center py-10">
+            <h2 class="!border-none">ご清聴ありがとうございました</h2>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
+
+
